@@ -11,11 +11,11 @@
 		"email": "galvani78@gmail.com",
 		"homepage": "http://galvani.cz",
 		"role": "Lead developer"
-	},
+	}],
 	"autoload": {
 		"psr-0": {
 			"Galvani": "src/",
-			"Galvani\\CoffeeClosure\\": "src/",
+			"Galvani\\CoffeeClosure\\": "src/"
 	            }
 	}
 }
