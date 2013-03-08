@@ -1,7 +1,8 @@
 {
 	"name": "galvani/coffee-closure",
-	"version" : "0.1.5",
+	"version" : "0.1.6",
 	"require": {
+		"symfony/symfony": ">=2.*"
 	},
 	"keywords": [ "symfony", "google closure", "coffeescript", "coffee", "coffee script", "closure" ],
 	"license" : "MIT",
@@ -15,7 +16,8 @@
 	"autoload": {
 		"psr-0": {
 			"Galvani": "src/",
-			"Galvani\\CoffeeClosure\\": "src/"
+			"Galvani\\CoffeeClosureBundle\\": "src/"
 	            }
 	}
+
 }
