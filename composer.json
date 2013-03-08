@@ -17,6 +17,5 @@
 			"Galvani": "src/",
 			"Galvani\\CoffeeClosure\\": "src/",
 	            }
-	},
-
+	}
 }
