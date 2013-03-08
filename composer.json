@@ -1,6 +1,6 @@
 {
 	"name": "galvani/coffee-closure",
-	"version" : "0.1.5"
+	"version" : "0.1.5",
 	"require": {
 	},
 	"keywords": [ "symfony", "google closure", "coffeescript", "coffee", "coffee script", "closure" ],
