@@ -1,6 +1,6 @@
 {
 	"name": "galvani/coffee-closure",
-	"version" : "0.1.8",
+	"version" : "0.1.9",
 	"require": {
 		"symfony/symfony": ">=2.1"
 	},
@@ -15,8 +15,7 @@
 	}],
 	"autoload": {
 		"psr-0": {
-			"Galvani": "/",
-			"Galvani\\CoffeeClosureBundle\\": "/"
+			"Galvani\\CoffeeClosureBundle\\": ""
 	            }
 	}
 
