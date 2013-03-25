@@ -1,6 +1,6 @@
 {
 	"name": "galvani/coffee-closure",
-	"version" : "0.1.6",
+	"version" : "0.1.7",
 	"require": {
 		"symfony/symfony": ">=2.1"
 	},
@@ -11,12 +11,12 @@
 		"name": "Jan Kozak",
 		"email": "galvani78@gmail.com",
 		"homepage": "http://galvani.cz",
-		"role": "Lead developer"
+		"role": "Good"
 	}],
 	"autoload": {
 		"psr-0": {
-			"Galvani": "src/",
-			"Galvani\\CoffeeClosureBundle\\": "src/"
+			"Galvani": "vendor/",
+			"Galvani\\CoffeeClosureBundle\\": "vendor/"
 	            }
 	}
 
