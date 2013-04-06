@@ -2,6 +2,8 @@
 
 namespace Galvani\CoffeeClosureBundle\Command;
 
+use Symfony\Component\DependencyInjection;
+use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Bundle\FrameworkBundle\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,19 +23,32 @@ class CompileCommand extends Command\ContainerAwareCommand {
 				->addOption("watch", null, InputOption::VALUE_NONE)
 				->setDescription('Compiles Coffee Script in Closure mode')
 		;
+
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output) {
-		$output->writeln('<info>Compiling Coffee Script in closure mode</info>');
+		$exec = array(); $bundlePaths = array();
 
-		$exec = array();
+		//	Get configuration
+		$yaml = \Symfony\Component\Yaml\Yaml::parse(file_get_contents($this->getContainer()->get('kernel')->getRootDir() .'/config/config.yml'));
+		$this->config = $yaml['coffee_closure'];
 
-		//$exec[]="cache:clear";
+		//	Get bundles paths
+		foreach ($this->config['bundles'] as $bundle) {
+			$bundlePath = $this->getContainer()->get('kernel')->getBundle($bundle)->getPath();
+			$exec[] = 'tools/closure-library/closure/bin/build/depswriter.py --root_with_prefix="'.$bundlePath.'/public/js" >'.$bundlePath.'/public/js/deps.js';
+		}
+
+		//	Build dependencies builder's argument
+
+
 		$exec[] = 'tools/closure-library/closure/bin/build/depswriter.py --root_with_prefix="./src/Liquidy/LiquidyBundle/Resources/public/js/liquidy ../../../../liquidy/js/liquidy" >./src/Liquidy/LiquidyBundle/Resources/public/js/deps.js';
 		//$exec[] = 'tools/closure-library/closure/bin/calcdeps.py -i src/Liquidy/LiquidyBundle/Resources/public/js/app.js -p src/Galvani/CoffeeClosureBundle/Resources/public/js/closure -o deps >> src/Liquidy/LiquidyBundle/Resources/public/js/deps.js';
 		//$exec[] = './tools/closure-library/closure/bin/build/closurebuilder.py --root=./tools/closure-library/ --output_mode=compiled --root=src/Liquidy/LiquidyBundle/Resources/public/js/ --namespace="liquidy.start" --output_file=src/Liquidy/LiquidyBundle/Resources/public/js/liquidy.js';
 
+		var_dump($exec); die();
 
+		print_r($this->getContainer()->getParameter('coffee_closure.bin')); die();
 		$exec_row = array($this->getContainer()->getParameter('coffee_closure.bin.coffee'));
 		$exec_row[] = str_replace('!options!', ( $input->getOption('watch') ? "--watch" : ""), $this->getContainer()->getParameter('coffee_closure.compile.command'));
 

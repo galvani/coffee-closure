@@ -1,5 +1,5 @@
 ## YAML Template.
 parameters:
-  coffee_closure.bin.coffee: ./tools/coffee-script/bin/coffee
-  coffee_closure.compile.command:	--compile  --lint --bare --require ./src/Galvani/CoffeeClosureBundle/Resources/public/js/closure/goog/base.js --google !options! ./src
+  coffee_closure.bin.coffee: coffee
+  coffee_closure.compile.command:	--compile  --lint --bare --require ./vendor/galvani/coffee-closure/Galvani/CoffeeClosureBundle/Resources/public/js/closure/goog/base.js --google !options! ./src
   coffee_closure.run.command: --compile  --lint --nodejs --google --watch
