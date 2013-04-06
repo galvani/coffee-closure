@@ -12,7 +12,9 @@ INSTALL
 add these lines to composer.json:
 
 `"repositories": {
+
                 "bolinfest/coffee-script": {
+
                         "type": "package",
                         "package": {
                                 "name": "bolinfest/coffee-script",
@@ -28,12 +30,18 @@ add these lines to composer.json:
 `
 
 register bundle in your AppKernel:
+
 `new Galvani\CoffeeClosureBundle\CoffeeClosureBundle()`
 
 add configuration options to your config:
 `coffee_closure:
+
   bin: "/usr/bin/env coffee"
+
   closure: "src/Galvani/PocketBoyBundle/Resources/public/js/"
+
   src: "src/Galvani/PocketBoyBundle/Resources/public/coffee"
+
   bundles: [ "GalvaniPocketBoyBundle" ]
+
 `
