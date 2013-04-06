@@ -11,7 +11,8 @@ INSTALL
 
 add these lines to composer.json:
 
-`"repositories": {
+`
+"repositories": {
 
                 "bolinfest/coffee-script": {
 
@@ -34,6 +35,7 @@ register bundle in your AppKernel:
 `new Galvani\CoffeeClosureBundle\CoffeeClosureBundle()`
 
 add configuration options to your config:
+
 `coffee_closure:
 
   bin: "/usr/bin/env coffee"
