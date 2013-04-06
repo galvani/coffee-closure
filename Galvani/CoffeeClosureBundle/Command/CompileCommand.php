@@ -36,23 +36,19 @@ class CompileCommand extends Command\ContainerAwareCommand {
 		//	Get bundles paths
 		foreach ($this->config['bundles'] as $bundle) {
 			$bundlePath = $this->getContainer()->get('kernel')->getBundle($bundle)->getPath();
-			$exec[] = 'tools/closure-library/closure/bin/build/depswriter.py --root_with_prefix="'.$bundlePath.'/public/js" >'.$bundlePath.'/public/js/deps.js';
+			$relativePath = str_repeat('../',substr_count($bundlePath,'/')-3);
+			if (!$input->getOption('watch')) {
+				$exec[] = "vendor/bolinfest/coffee-script/bin/coffee --output ".$bundlePath."/Resources/public/js/ --compile --lint --bare --require ./".$this->config['closure']."/closure/goog/base.js --google ".$bundlePath."/Resources/public/coffee/";
+			}
+			$exec[] = $this->config['closure'].'/closure/bin/build/depswriter.py --root_with_prefix="'.$bundlePath.'/Resources/public/js '.$relativePath.'js/" >'.$bundlePath.'/Resources/public/js/deps.js';
 		}
 
-		//	Build dependencies builder's argument
+		$exec[] = "cache:clear";
 
-
-		$exec[] = 'tools/closure-library/closure/bin/build/depswriter.py --root_with_prefix="./src/Liquidy/LiquidyBundle/Resources/public/js/liquidy ../../../../liquidy/js/liquidy" >./src/Liquidy/LiquidyBundle/Resources/public/js/deps.js';
-		//$exec[] = 'tools/closure-library/closure/bin/calcdeps.py -i src/Liquidy/LiquidyBundle/Resources/public/js/app.js -p src/Galvani/CoffeeClosureBundle/Resources/public/js/closure -o deps >> src/Liquidy/LiquidyBundle/Resources/public/js/deps.js';
-		//$exec[] = './tools/closure-library/closure/bin/build/closurebuilder.py --root=./tools/closure-library/ --output_mode=compiled --root=src/Liquidy/LiquidyBundle/Resources/public/js/ --namespace="liquidy.start" --output_file=src/Liquidy/LiquidyBundle/Resources/public/js/liquidy.js';
-
-		var_dump($exec); die();
-
-		print_r($this->getContainer()->getParameter('coffee_closure.bin')); die();
-		$exec_row = array($this->getContainer()->getParameter('coffee_closure.bin.coffee'));
-		$exec_row[] = str_replace('!options!', ( $input->getOption('watch') ? "--watch" : ""), $this->getContainer()->getParameter('coffee_closure.compile.command'));
-
-		$exec[] = join(' ', $exec_row);
+		if ($input->getOption('watch')) {
+			$output->writeln("<comment>Watching last bundle only ".$bundle."</comment>");
+			$exec[] = $exec[] = "vendor/bolinfest/coffee-script/bin/coffee --output ".$bundlePath."/Resources/public/js/ --compile --watch --lint --bare --require ./".$this->config['closure']."/closure/goog/base.js --google ".$bundlePath."/Resources/public/coffee/";
+		}
 
 		foreach ($exec as $command) {
 			if ($command=='cache:clear') {

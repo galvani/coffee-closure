@@ -41,3 +41,39 @@ add configuration options to your config:
 		src: "src/Galvani/PocketBoyBundle/Resources/public/coffee"
 		bundles: [ "GalvaniPocketBoyBundle" ]
 
+
+The bundle will scan Resources/public/coffee and compile all .coffee files in Resources/public/js
+
+
+Example of application entry point, which needs to be inside the Resources/public/js:
+-------------------------------------------------------------------------------------
+
+app.js:
+
+	goog.provide('app.start');
+
+	goog.require('goog.dom');
+	goog.require('pocketboy');
+
+	app.start = function() {
+	  var pocketboyApplication = new pocketboy();
+	  pocketboyApplication.start();
+	};
+
+	// Ensures the symbol will be visible after compiler renaming.
+	goog.exportSymbol('app.start', app.start);
+
+
+
+and in you html simply add:
+
+	<script>goog.require('app.start'); app.start();</script>
+
+
+twig example using assetic:
+
+	<script src="{{ asset('bundles/galvanipocketboy/js/closure-library/closure/goog/base.js') }}"></script>
+	<script src="{{ asset('bundles/galvanipocketboy/js/deps.js') }}"></script>
+	<script src="{{ asset('bundles/galvanipocketboy/js/app.js') }}"></script>
+
+
